@@ -10,5 +10,5 @@ license = "MIT"
 tokio = { version = "1.0", features = ["full"] }
 
 lettre = { version = "0.11" }
-async-imap = "0.11.2"
-# native-tls = "0.2"
+async-imap = { version = "0.9", features = ["tokio-native-tls"] }
+tokio-native-tls = "0.3"
