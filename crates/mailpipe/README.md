@@ -5,7 +5,7 @@
 [![Rust](https://img.shields.io/badge/rust-2021_edition-orange?style=flat-square&logo=rust)](https://www.rust-lang.org)
 ![Status](https://img.shields.io/badge/status-early_development-yellow?style=flat-square)
 
-A unified, high-level SMTP and IMAP email engine backend library for Rust, built on top of [async-imap](https://crates.io/crates/async-imap) and [lettre](https://crates.io/crates/lettre). It's the email backend that powers [magpipe](https://github.com/watson/magpipe).
+A unified, high-level SMTP and IMAP email engine backend library for Rust, built on top of [async-imap](https://crates.io/crates/async-imap) and [lettre](https://crates.io/crates/lettre). It's the email backend that powers [magpipe](https://github.com/tazyfoundsoup/magpipe).
 
 ---
 
