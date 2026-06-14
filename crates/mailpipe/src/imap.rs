@@ -17,17 +17,28 @@ pub struct ImapConnector {
     pub port: u16,
 }
 
-/// An active IMAP session, wrapping an [`async_imap::Session`] with TLS.
+/// An active, authenticated IMAP session over TLS.
 pub struct ImapSession {
-    /// The active IMAP session, wrapped with TLS.
-    /// 
-    /// This is the underlying [`async_imap::Session`] instance, with TLS wrapping enabled.
-    pub session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>,
+    session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>,
 }
 
 impl ImapSession {
-    pub fn new(session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>) -> Self {
+    fn new(session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>) -> Self {
         Self { session }
+    }
+
+    /// Sends a `LOGOUT` command and closes the connection.
+    ///
+    /// Consumes the session; it cannot be used after this call.
+    ///
+    /// # Errors
+    ///
+    /// Returns a [`String`] describing the failure if the server rejects the logout.
+    pub async fn logout(mut self) -> Result<(), String> {
+        self.session
+            .logout()
+            .await
+            .map_err(|e| format!("IMAP logout failed: {}", e))
     }
 }
 
@@ -52,10 +63,7 @@ impl ImapConnector {
     ///
     /// Returns a [`String`] describing the failure if TLS setup, the TCP
     /// connection, the TLS handshake, or IMAP login fails.
-    pub async fn connect(
-        &self,
-        pass: &str,
-    ) -> Result<ImapSession, String> {
+    pub async fn connect(&self, pass: &str) -> Result<ImapSession, String> {
         let tls_connector = native_tls::TlsConnector::new()
             .map_err(|e| format!("Failed to initialize TLS: {}", e))?;
 
