@@ -7,7 +7,7 @@ edition = "2021"
 license = "MIT"
 
 [dependencies]
-mailpipe = { version = "0.0.1", path = "../mailpipe" }
+mailpipe = { version = "0.1.0", path = "../mailpipe" }
 
 # Only frontend based dependencies here
 ratatui = "0.26"
