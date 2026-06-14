@@ -26,11 +26,17 @@ pub struct ImapSession {
 /// 
 /// This struct holds the total number of messages and the number of unread messages in a mailbox, however more fields will be added soon
 pub struct ImapMailbox {
+    /// The name of the mailbox.
+    pub name: String,
+
     /// The total amount of messages in the mailbox.
     pub messages_total: u32,
 
     /// The number of unread messages in the mailbox.
     pub messages_unread: u32,
+
+    /// The number of recent messages in the mailbox.
+    pub messages_recent: u32,
 }
 
 impl ImapSession {
@@ -69,8 +75,10 @@ impl ImapSession {
             .map_err(|e| format!("IMAP open failed: {}", e))?;
 
         Ok(ImapMailbox {
+            name: mailbox.to_string(),
             messages_total: mailbox.exists,
-            messages_unread: mailbox.unseen.unwrap(),
+            messages_unread: mailbox.unseen.unwrap_or(0),
+            messages_recent: mailbox.recent,
         })
     }
 }
