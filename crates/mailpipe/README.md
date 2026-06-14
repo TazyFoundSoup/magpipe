@@ -20,7 +20,7 @@ A unified, high-level SMTP and IMAP email engine backend library for Rust, built
 
 ```toml
 [dependencies]
-mailpipe = "0.1.0"
+mailpipe = "0.1.1"
 ```
 
 ## Usage

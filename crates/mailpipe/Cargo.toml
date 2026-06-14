@@ -1,6 +1,6 @@
 [package]
 name = "mailpipe"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Watson Wheeler <me@tazy.dev>"]
 description = "A unified, high-level SMTP and IMAP email engine backend library for Rust."
 edition = "2021"

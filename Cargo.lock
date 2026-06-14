@@ -733,7 +733,7 @@ dependencies = [
 
 [[package]]
 name = "magpipe"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "mailpipe",
  "ratatui",
@@ -741,7 +741,7 @@ dependencies = [
 
 [[package]]
 name = "mailpipe"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "async-imap",
  "lettre",
