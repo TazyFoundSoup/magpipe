@@ -17,6 +17,20 @@ pub struct ImapConnector {
     pub port: u16,
 }
 
+/// An active IMAP session, wrapping an [`async_imap::Session`] with TLS.
+pub struct ImapSession {
+    /// The active IMAP session, wrapped with TLS.
+    /// 
+    /// This is the underlying [`async_imap::Session`] instance, with TLS wrapping enabled.
+    pub session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>,
+}
+
+impl ImapSession {
+    pub fn new(session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>) -> Self {
+        Self { session }
+    }
+}
+
 impl ImapConnector {
     pub fn new(server: impl Into<String>, email: impl Into<String>) -> Self {
         Self {
@@ -41,7 +55,7 @@ impl ImapConnector {
     pub async fn connect(
         &self,
         pass: &str,
-    ) -> Result<async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>, String> {
+    ) -> Result<ImapSession, String> {
         let tls_connector = native_tls::TlsConnector::new()
             .map_err(|e| format!("Failed to initialize TLS: {}", e))?;
 
@@ -66,6 +80,6 @@ impl ImapConnector {
             .await
             .map_err(|(e, _unauth_client)| format!("IMAP login failed: {}", e))?;
 
-        Ok(session)
+        Ok(ImapSession::new(session))
     }
 }
