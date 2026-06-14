@@ -62,20 +62,20 @@ impl ImapSession {
     ///
     /// # Arguments
     ///
-    /// * `mailbox` - The name of the mailbox to open.
+    /// * `name` - The name of the mailbox to open (will be "INBOX" in most instances)
     ///
     /// # Errors
     ///
     /// Returns a [`String`] describing the failure if the server rejects the open request.
-    pub async fn open(&mut self, mailbox: &str) -> Result<ImapMailbox, String> {
+    pub async fn open(&mut self, name: &str) -> Result<ImapMailbox, String> {
         let mailbox = self
             .session
-            .select(mailbox)
+            .select(name)
             .await
             .map_err(|e| format!("IMAP open failed: {}", e))?;
 
         Ok(ImapMailbox {
-            name: mailbox.to_string(),
+            name: name.to_string(),
             messages_total: mailbox.exists,
             messages_unread: mailbox.unseen.unwrap_or(0),
             messages_recent: mailbox.recent,
