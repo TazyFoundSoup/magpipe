@@ -3,7 +3,7 @@ name = "magpipe"
 version = "0.0.1"
 authors = ["Watson Wheeler <me@tazy.dev>"]
 description = "The decentralized power of a mailing list, wrapped in the comfort of a real-time chat app."
-edition = "2024"
+edition = "2021"
 license = "MIT"
 
 [dependencies]
