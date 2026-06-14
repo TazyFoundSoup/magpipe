@@ -12,3 +12,4 @@ lettre = { version = "0.11" }
 async-imap = { version = "0.11", default-features = false, features = ["runtime-tokio"] }
 tokio-native-tls = "0.3"
 tokio-util = { version = "0.7", features = ["compat"] }
+chrono = "0.4.45"
