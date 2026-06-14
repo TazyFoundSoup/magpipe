@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Watson Wheeler <me@tazy.dev>"]
 description = "A unified, high-level SMTP and IMAP email engine backend library for Rust."
 edition = "2021"
+license = "MIT"
 
 [dependencies]
 tokio = { version = "1.0", features = ["full"] }
