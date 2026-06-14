@@ -1,6 +1,6 @@
 [package]
 name = "magpipe"
-version = "0.0.1"
+version = "0.1.0"
 authors = ["Watson Wheeler <me@tazy.dev>"]
 description = "The decentralized power of a mailing list, wrapped in the comfort of a real-time chat app."
 edition = "2021"

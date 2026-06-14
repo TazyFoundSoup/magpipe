@@ -3,3 +3,4 @@ members = [
     "crates/magpipe",
     "crates/mailpipe",
 ]
+resolver = "2"
