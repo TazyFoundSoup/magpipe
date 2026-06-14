@@ -22,6 +22,17 @@ pub struct ImapSession {
     session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>,
 }
 
+/// Represents an IMAP mailbox (folder) with message counts.
+/// 
+/// This struct holds the total number of messages and the number of unread messages in a mailbox, however more fields will be added soon
+pub struct ImapMailbox {
+    /// The total amount of messages in the mailbox.
+    pub messages_total: u32,
+
+    /// The number of unread messages in the mailbox.
+    pub messages_unread: u32,
+}
+
 impl ImapSession {
     fn new(session: async_imap::Session<tokio_native_tls::TlsStream<TcpStream>>) -> Self {
         Self { session }
@@ -39,6 +50,28 @@ impl ImapSession {
             .logout()
             .await
             .map_err(|e| format!("IMAP logout failed: {}", e))
+    }
+
+    /// Sends a `SELECT` command to open a mailbox (folder) and returns an [`ImapMailbox`] with the details.
+    ///
+    /// # Arguments
+    ///
+    /// * `mailbox` - The name of the mailbox to open.
+    ///
+    /// # Errors
+    ///
+    /// Returns a [`String`] describing the failure if the server rejects the open request.
+    pub async fn open(&mut self, mailbox: &str) -> Result<ImapMailbox, String> {
+        let mailbox = self
+            .session
+            .select(mailbox)
+            .await
+            .map_err(|e| format!("IMAP open failed: {}", e))?;
+
+        Ok(ImapMailbox {
+            messages_total: mailbox.exists,
+            messages_unread: mailbox.unseen.unwrap(),
+        })
     }
 }
 
